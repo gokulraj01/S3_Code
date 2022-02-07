@@ -1,0 +1,40 @@
+I.  sparseTranspose(spc):
+    i=1, j=2, n=spc[0][2]
+
+    SWAP spc[0][0] with spc[0][1]
+    while(i <= n):
+        j = i+1
+        min = i;
+        while(j <= n):
+            if(spc[min][1]*10 + spc[min][0] > spc[j][1]*10 + spc[j][0])
+                min = j
+            j++
+        if(min == i)
+            SWAP spc[i][0] with spc[i][1]
+        else
+            t0, t1, t2 = spc[i][0], spc[i][1], spc[i][2]
+            spc[i] = [spc[min][1], spc[min][0], spc[min][2]]
+            spc[min] = [t0, t1, t2]
+        i++
+
+II. makeSparse(mat, r, c):
+    ri = 1
+    i = 0; j = 0
+    spc = [[]]
+    while(i < r):
+        while(j < c):
+            if(mat[i][j] != 0)
+                spc[ri] = [i, j, mat[i][j]]
+                ri++
+            j++
+        i++
+    spc[0] = [r, c, ri-1]
+    return spc
+
+III. main()
+    1. Start
+    2. INPUT matrix, mat
+    3. call makeSparse on mat, store result to spc
+    4. call sparseTranspose on spc
+    5. DISPLAY spc
+    6. End

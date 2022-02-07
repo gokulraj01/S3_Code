@@ -1,0 +1,45 @@
+I. addSparse(spc1, spc2)
+    n1 = spc1[0][2] + 1
+    n2 = spc2[0][2] + 1
+    i = 1; j = 1; ri = 1
+
+    while(i < n1 or j < n2):
+        if(spc1[i][0] == spc2[j][0] and spc1[i][1] == spc2[j][1]):
+            sum[ri] = [spc1[i][0], spc1[i][1], spc1[i][2]+spc2[j][2]]
+            i++; j++
+        else if(spc1[i][0] < spc2[j][0] OR
+                (spc1[i][0] == spc2[j][0] AND spc1[i][1] < spc2[j][1]) OR
+                j == n2):
+            sum[ri] = spc1[i]
+            i++
+        else:
+            sum[ri] = spc2[j]
+            j++
+        ri++
+    
+    sum[0] = [spc1[0][0], spc1[0][1], ri-1]
+    return sum
+
+II. makeSparse(mat, r, c):
+    ri = 1
+    i = 0; j = 0
+    spc = [[]]
+    while(i < r):
+        while(j < c):
+            if(mat[i][j] != 0)
+                spc[ri] = [i, j, mat[i][j]]
+                ri++
+            j++
+        i++
+    spc[0] = [r, c, ri-1]
+    return spc
+
+III. main()
+    1. Start
+    2. INPUT Matrices mat1, mat2
+    3. Call makeSparse to convert mat1 and mat2 to sparse matrices spc1 and spc2
+    4. Call addSparse with spc1 and spc2 as parameters
+    5. Store result of addSparse in sum
+    6. DISPLAY sum
+    7. End
+
