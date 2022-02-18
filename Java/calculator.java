@@ -36,6 +36,60 @@ class ButtonLayoutHandler {
     }
 }
 
+class Evaluate {
+    static int n1 = 0;
+    static int n2 = 0;
+    static int op = -1;
+    static boolean gop = false;
+    
+    void setOp(char op){
+        gop = true; 
+        switch(op){
+            case '+':
+                op = 0;
+                break;
+            case '-':
+                op = 1;
+                break;
+            case '*':
+                op = 2
+                break;;
+            case '/':
+                op = 3;
+                break;
+            default:
+                op = -1;
+        }
+    }
+    
+    void putNum(int digit){
+        if(gop)
+            n2 = n2*10+digit;
+        else
+            n1 = n1*10+digit;
+    }
+    
+    int eval(){
+        switch(op){
+            case 0:
+                return n1+n2;
+                break;
+            case 1:
+                return n1-n2;
+                break;
+            case 2:
+                return n1*n2;
+                break;
+            case 3:
+                return n1/n2;
+                break;
+            default:
+                return 0;
+        }
+        gop = false;
+    }
+}
+
 class NumBtn extends Button {
     public int val;
     NumBtn(int value, ButtonLayoutHandler layout, NumClickHandler handler, Panel f){
@@ -71,16 +125,18 @@ class OperatorBtn extends Button {
 }
 
 class OperatorClickHandler implements ActionListener {
+    Evaluate eval = new Evaluate();
     @Override
     public void actionPerformed(ActionEvent e) {
         OperatorBtn src = (OperatorBtn) e.getSource();
         System.out.println("Clicked Operator: "+src.val);
+        eval.setOp(src.val);
     }
 }
 
 class Calculator extends Frame{
-    final int windowW = 500*2,
-              windowH = 360*2,
+    final int windowW = 500,
+              windowH = 360,
               dispPad = 20,
               padding = 10,
               dispH = 50,
