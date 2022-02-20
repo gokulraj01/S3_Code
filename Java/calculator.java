@@ -2,8 +2,6 @@ import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.event.*;
 
-import javax.swing.plaf.LabelUI;
-
 class ButtonLayoutHandler {
     public final int padding = 10;
     private Dimension btnDim, frameDim;
@@ -31,10 +29,6 @@ class ButtonLayoutHandler {
             ci = 0;
         }
         return r;
-    }
-
-    Dimension getFrameDim(){
-        return frameDim;
     }
 }
 
@@ -205,7 +199,6 @@ class Calculator extends Frame{
         opList.setBackground(Color.BLACK);
         opList.setBounds(numPadW, panelOffset, numPadW, numpadH);
         opList.setLayout(null);
-
         OperatorBtn eq = new OperatorBtn('=', opH, numpad);
         Rectangle eqr = numpadLt.getNextButtonDim();
         eqr.width = eqr.width*2 + numpadLt.padding;
