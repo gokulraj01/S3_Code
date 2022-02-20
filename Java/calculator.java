@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.event.*;
 
+import javax.swing.plaf.LabelUI;
+
 class ButtonLayoutHandler {
     public final int padding = 10;
     private Dimension btnDim, frameDim;
@@ -36,66 +38,86 @@ class ButtonLayoutHandler {
     }
 }
 
+class DisplayHandler{
+    static Label display;
+    DisplayHandler(){}
+    DisplayHandler(Label disp){
+        display = disp;
+    }
+    void show(String s){
+        display.setText(s);
+    }
+}
+
 class Evaluate {
-    static int n1 = 0;
-    static int n2 = 0;
-    static int op = -1;
-    static boolean gop = false;
+    static double n1 = 0;
+    static double n2 = 0;
+    static char op = '\0';
+    DisplayHandler disp = new DisplayHandler();
     
-    void setOp(char op){
-        gop = true; 
-        switch(op){
-            case '+':
-                op = 0;
-                break;
-            case '-':
-                op = 1;
-                break;
-            case '*':
-                op = 2
-                break;;
-            case '/':
-                op = 3;
-                break;
-            default:
-                op = -1;
-        }
+    void clear(){
+        n1 = 0;
+        n2 = 0;
+        op = '\0';
+        disp.show("0");
     }
-    
-    void putNum(int digit){
-        if(gop)
-            n2 = n2*10+digit;
+
+    void setOp(char o){
+        if(o == 'C')
+            clear();
+        else if(o == '=')
+            eval();
+        else if(op != '\0'){
+            eval();
+            op = o;
+        }
         else
-            n1 = n1*10+digit;
+            op = o;
     }
     
-    int eval(){
-        switch(op){
-            case 0:
-                return n1+n2;
-                break;
-            case 1:
-                return n1-n2;
-                break;
-            case 2:
-                return n1*n2;
-                break;
-            case 3:
-                return n1/n2;
-                break;
-            default:
-                return 0;
+    void putNum(double digit){
+        if(op != '\0'){
+            n2 = n2*10+digit;
+            disp.show(Integer.toString((int)n1)+" "+op+" "+Integer.toString((int)n2));
         }
-        gop = false;
+        else{
+            n1 = n1*10+digit;
+            disp.show(Integer.toString((int)n1));
+        }
+    }
+    
+    void eval(){
+        try{
+            switch(op){
+                case '+':
+                    n1 = n1+n2;
+                    break;
+                case '-':
+                    n1 = n1-n2;
+                    break;
+                case '*':
+                    n1 = n1*n2;
+                    break;
+                case '/':
+                    n1 = n1/n2;
+                    break;
+            }
+        }catch(Exception e){
+            clear();
+            disp.show(e.getClass().toString());
+        }
+        n2 = 0;
+        op = '\0';
+        disp.show(Double.toString(n1));
     }
 }
 
 class NumBtn extends Button {
-    public int val;
-    NumBtn(int value, ButtonLayoutHandler layout, NumClickHandler handler, Panel f){
+    public double val;
+    NumBtn(double value, ButtonLayoutHandler layout, NumClickHandler handler, Panel f){
         val = value;
         setBounds(layout.getNextButtonDim());
-        setLabel(Integer.toString(val));
+        setLabel(Integer.toString((int)val));
         addActionListener(handler);
         setBackground(Color.decode("#2b2b2b"));
         setForeground(Color.white);
@@ -103,16 +125,16 @@ class NumBtn extends Button {
     }
 }
 
-class NumClickHandler implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        NumBtn src = (NumBtn) e.getSource();
-        System.out.println("Clicked: "+src.val);
-    }
-}
-
 class OperatorBtn extends Button {
     public char val;
+    OperatorBtn(char value, OperatorClickHandler handler, Panel f){
+        setLabel(""+value);
+        val = value;
+        addActionListener(handler);
+        setForeground(Color.WHITE);
+        setBackground(Color.decode("#dc8c00"));
+        f.add(this);
+    }
     OperatorBtn(char value, ButtonLayoutHandler layout, OperatorClickHandler handler, Panel f){
         val = value;
         setBounds(layout.getNextButtonDim());
@@ -124,12 +146,20 @@ class OperatorBtn extends Button {
     }
 }
 
+class NumClickHandler implements ActionListener {
+    Evaluate eval = new Evaluate();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        NumBtn src = (NumBtn) e.getSource();
+        eval.putNum(src.val);
+    }
+}
+
 class OperatorClickHandler implements ActionListener {
     Evaluate eval = new Evaluate();
     @Override
     public void actionPerformed(ActionEvent e) {
         OperatorBtn src = (OperatorBtn) e.getSource();
-        System.out.println("Clicked Operator: "+src.val);
         eval.setOp(src.val);
     }
 }
@@ -154,6 +184,9 @@ class Calculator extends Frame{
         display.setAlignment(Label.RIGHT);
         add(display);
 
+        // Initialize DisplayHandler
+        new DisplayHandler(display);
+
         // Initialize Number Pad
         NumClickHandler numH = new NumClickHandler();
         ButtonLayoutHandler numpadLt = new ButtonLayoutHandler(numPadW, numpadH, 4, 3, padding);
@@ -161,34 +194,30 @@ class Calculator extends Frame{
         numpad.setBackground(Color.BLACK);
         numpad.setBounds(0, panelOffset, numPadW, numpadH);
         numpad.setLayout(null);
-        new NumBtn(1, numpadLt, numH, numpad);
-        new NumBtn(2, numpadLt, numH, numpad);
-        new NumBtn(3, numpadLt, numH, numpad);
-        new NumBtn(4, numpadLt, numH, numpad);
-        new NumBtn(5, numpadLt, numH, numpad);
-        new NumBtn(6, numpadLt, numH, numpad);
-        new NumBtn(7, numpadLt, numH, numpad);
-        new NumBtn(8, numpadLt, numH, numpad);
-        new NumBtn(9, numpadLt, numH, numpad);
+        for(int i=1; i<10; i++)
+            new NumBtn(i, numpadLt, numH, numpad);
         new NumBtn(0, numpadLt, numH, numpad);
-        Button eq = new Button("=");
-        Rectangle eqr = numpadLt.getNextButtonDim();
-        eqr.width = eqr.width*2 + numpadLt.padding;
-        eq.setBounds(eqr);
-        numpad.add(eq);
-        add(numpad);
 
         // Initialize Operations Pad
         OperatorClickHandler opH = new OperatorClickHandler();
-        ButtonLayoutHandler fnLt = new ButtonLayoutHandler(numPadW, numpadH, 4, 1, padding);
+        ButtonLayoutHandler fnLt = new ButtonLayoutHandler(numPadW, numpadH, 5, 1, padding);
         Panel opList = new Panel();
         opList.setBackground(Color.BLACK);
         opList.setBounds(numPadW, panelOffset, numPadW, numpadH);
         opList.setLayout(null);
+
+        OperatorBtn eq = new OperatorBtn('=', opH, numpad);
+        Rectangle eqr = numpadLt.getNextButtonDim();
+        eqr.width = eqr.width*2 + numpadLt.padding;
+        eq.setBounds(eqr);
+        OperatorBtn cls = new OperatorBtn('C', fnLt, opH, opList);
+        cls.setBackground(Color.red);
         new OperatorBtn('+', fnLt, opH, opList);
         new OperatorBtn('-', fnLt, opH, opList);
         new OperatorBtn('*', fnLt, opH, opList);
         new OperatorBtn('/', fnLt, opH, opList);
+
+        add(numpad);
         add(opList);
 
         setSize(windowW, windowH);
