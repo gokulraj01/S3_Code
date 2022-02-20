@@ -13,16 +13,13 @@ class LightBtn extends Button{
 
 class LightView extends Panel{
     int xoffset = 20, yoffset = 20, state = 0;
-    public Graphics g;
     
     void setState(int state){
         this.state = state;
-        System.out.println("State: "+state);
-        redraw();
+        repaint();
     }
-    
-    void redraw(){
-        System.out.println("Redraw "+state);
+
+    public void paint(Graphics g){
         g.setColor(Color.black);
         g.fillRect(xoffset+0,yoffset+0,110,300);
         g.setColor(Color.red);
@@ -37,11 +34,6 @@ class LightView extends Panel{
         g.drawOval(xoffset+20, yoffset+200, 70, 70);
         if(state == 2)
             g.fillOval(xoffset+20, yoffset+200, 70, 70);
-    }
-    
-    public void paint(Graphics g){
-        this.g = g;
-        redraw();
     }
 }
 
