@@ -1,0 +1,92 @@
+1. Declare a ButtonLayoutHandler Class
+    1. Take width and height of frame, rows, cols, and margin
+    2. x = y = margin
+    3. ci = 0;
+    3. Usable width and height is obtained by subtracting 2*margin and (col-1)*gap
+    4. Split this usable width among cols and usable height among rows
+
+    ## nextButtonDim()
+        1. x = x + dw + gap
+        2. if(ci > col)
+            1. y = y + dh + gap
+            1. ci = 0
+        3. return dimension x, y
+
+2. Declare a DisplayHandler Class
+    1. Store a static label object to act as display
+    ## show(s)
+        1. Display s as value of label object
+
+3. Declare an Evaluator Class
+    1. n1 = 0, n2 = 0, op = null
+    2. Make instance of DisplayHandler, disp
+    
+    A. clear()
+        1. n1 = 0, n2 = 0, op = null
+        2. Clear Display
+        
+    B. setOp(o)
+        1. if o is 'C':
+            Clear Display
+        2. if o is '=':
+            Call eval()
+        3. if op not null:
+            Call eval()
+            op = o
+        4. else:
+            op = o
+    
+    C. putNum(digit)
+        1. if op not null:
+            1. n2 = n2*10+digit
+            2. Show value in display
+        2. else:
+            1. n1 = n1*10+digit
+            2. Show value in display
+            
+    D. eval()
+        1. Based on value of op:
+            1. if '+' - do n1+n2
+            2. if '-' - do n1-n2
+            3. if '*' - do n1*n2
+            4. if '/' - do n1/n2
+        2. Handle Exceptions if any
+        3. n2 = 0
+        4. op = null
+        5. Set result in n1 and display it.
+        
+4. Declare NumBtn inheriting AWT Button
+    1. Get and store button value, layout, destination Panel and NumClickHandler
+    2. Use this value and the layout provided to set size
+    3. Use provided NumClickHandler to set action listner
+
+5. Declare OperatorBtn inheriting AWT Button
+    1. Get and store button value, layout, destination Panel and OperatorBtnHandler
+    2. Use this value and the layout provided to set size
+    3. Use provided OperatorClickHandler to set action listner
+
+6. Declare NumClickHandler implementing ActionListener:
+    1. Make instance of Evaluate, eval
+    2. When actionPerformed, get source and take its value, val
+    3. Call putNum of eval using val
+
+7. Declare OperatorClickHandler implementing ActionListener:
+    1. Make instance of Evaluate, eval
+    2. When actionPerformed, get source and take its value, val
+    3. Call setOp of eval using val
+
+8. Declare Calculator inheriting AWT Frame:
+    1. Make label, disp
+    2. Make instance of Displayhandler using disp
+    3. Make instance of NumClickHandler, numH and OperatorClickHandler, opH
+    4. Make instance of ButtonLayoutHandler with a 4x3 grid, numLt and another one with 6X1 grid, opLt
+    5. Make 2 panels, numpad, opList
+    6. for values i=1 to 9:
+        1. Make instance of NumBtn with i, numLt, numpad, numH
+    7. for values i=[C, +, -, *, /, =]:
+        1. Make instance of OperatorBtn with i, opLt, opList, opH
+    8. Add numpad and opList to Frame
+    
+    A. main()
+        1. Make instance of Calculator    
+    
