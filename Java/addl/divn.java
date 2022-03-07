@@ -1,4 +1,3 @@
-package addl;
 import java.util.Scanner;
 
 class Divn{

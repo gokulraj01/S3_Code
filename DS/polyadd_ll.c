@@ -14,7 +14,7 @@ struct Term{
 struct Term *polyAddn(struct Term *poly1, struct Term *poly2){
     struct Term *res = NULL, *i = poly1, *j = poly2, *newNode, *lastNode = NULL;
     // while terms not exhausted
-    while(i != NULL || j != NULL){
+    while(i != NULL && j != NULL){
         newNode = malloc(sizeof(struct Term)); 
         // if exp equal, add coff and copy exp into newNode
         if(i->exp == j->exp){
@@ -23,12 +23,35 @@ struct Term *polyAddn(struct Term *poly1, struct Term *poly2){
             i = i->next; j = j->next;
         }
         // if exp of term1 bigger, or 2nd poly exhausted, copy term1 
-        else if(i->exp > j->exp || j == NULL){
+        else if(i->exp > j->exp){
             newNode->coff = i->coff;
             newNode->exp = i->exp;
             i = i->next;
         }
         // if exp of term2 bigger, or 1st poly exhausted, copy term2
+        else{
+            newNode->coff = j->coff;
+            newNode->exp = j->exp;
+            j = j->next;
+        }
+        // Add node to end of result polynomial
+        if(lastNode == NULL)
+            res = newNode;
+        else
+            lastNode->next = newNode;
+        lastNode = newNode;
+        newNode->next = NULL;
+    }
+    // copy remaining terms
+    while(i != NULL || j != NULL){
+        newNode = malloc(sizeof(struct Term)); 
+        // 2nd poly exhausted, copy term1 
+       if(j == NULL){
+            newNode->coff = i->coff;
+            newNode->exp = i->exp;
+            i = i->next;
+        }
+        // 1st poly exhausted, copy term2
         else{
             newNode->coff = j->coff;
             newNode->exp = j->exp;

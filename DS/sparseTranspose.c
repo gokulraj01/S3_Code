@@ -1,9 +1,11 @@
 // Author: Gokul Raj, 235, R3A, CSE
+// Program 7: Sparse Matrix Transpose
 
 #include <stdio.h>
 
 #define ARR_LEN 256
 
+// Input Matrix Data from user
 void getMatrix(int (*destMat)[ARR_LEN], int* r, int* c, char* msg){
     printf("%s\n", msg);
     printf("Enter rows and cols: ");
@@ -15,6 +17,7 @@ void getMatrix(int (*destMat)[ARR_LEN], int* r, int* c, char* msg){
     }
 }
 
+// Convert Matrix to a Sparse Matrix Format
 void makeSparseArray(int (*sourceMat)[ARR_LEN], int r, int c, int (*destMat)[3]){
     int ri = 1;
     for(int i=0; i<r; i++){
@@ -32,6 +35,7 @@ void makeSparseArray(int (*sourceMat)[ARR_LEN], int r, int c, int (*destMat)[3])
     destMat[0][2] = ri-1;
 }
 
+// Display a Sparse Matrix
 void showSparse(int (*mat)[3], char* msg){
     int r = mat[0][2]+1, c = 3;
     printf("\n%s\t[%d x %d]\n", msg, r, c);
@@ -42,13 +46,18 @@ void showSparse(int (*mat)[3], char* msg){
     }
 }
 
+// Transpose a Sparse Matrix
 void sparseTranspose(int (*mat)[3]){
     int n = mat[0][2];
 
     int t0 = mat[0][0];
     mat[0][0] = mat[0][1];
     mat[0][1] = t0;
-
+    /*
+        Performs selection sort wrt. column and then wrt row, while transposing simultaneously.
+        During item swap in selection sort, row and col in each item are also swapped to
+        get Transposed Sparse Matrix with proper format.
+    */
     for(int i=1; i<=n; i++){
         int min = i;
         for(int j=i+1; j<=n; j++){
@@ -68,6 +77,7 @@ void sparseTranspose(int (*mat)[3]){
     }
 }
 
+// Driver Code
 void main(){
     int mat[ARR_LEN][ARR_LEN], spr[ARR_LEN][3], r, c;
     getMatrix(mat, &r, &c, "Matrix A");

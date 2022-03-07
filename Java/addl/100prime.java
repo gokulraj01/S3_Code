@@ -1,4 +1,3 @@
-package addl;
 class PrimePrint{
     static boolean prime(int n){
         int r = (int) Math.sqrt(n);
@@ -20,5 +19,6 @@ class PrimePrint{
             }
             n++;
         }
+        System.out.println();
     }
 }

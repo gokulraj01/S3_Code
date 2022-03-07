@@ -44,7 +44,7 @@ void getSparse(int (*destMat)[3], char* msg){
 }
 
 void showMatrix(int (*mat)[ARR_LEN], int r, int c, char* msg){
-    printf("\n%s\t[%d x %d%]\n", msg, r, c);
+    printf("\n%s\t[%d x %d]\n", msg, r, c);
     for(int i=0; i<r; i++){
         for(int j=0; j<c; j++)
             printf("%d ", mat[i][j]);
@@ -54,7 +54,7 @@ void showMatrix(int (*mat)[ARR_LEN], int r, int c, char* msg){
 
 void showSparse(int (*mat)[3], char* msg){
     int r = mat[0][2]+1, c = 3;
-    printf("\n%s\t[%d x %d%]\n", msg, r, c);
+    printf("\n%s\t[%d x %d]\n", msg, r, c);
     for(int i=0; i<r; i++){
         for(int j=0; j<c; j++)
             printf("%d ", mat[i][j]);
@@ -64,9 +64,8 @@ void showSparse(int (*mat)[3], char* msg){
 
 void main(){
     int mat[ARR_LEN][ARR_LEN], r, c, res[ARR_LEN][3];
-    // getMatrix(mat, &r, &c);
-    // showMatrix(mat, r, c, "Input Matrix");
-    // makeSparseArray(mat, r, c, res);
-    getSparse(res, "Sparse Matrix A");
+    getMatrix(mat, &r, &c);
+    showMatrix(mat, r, c, "Input Matrix");
+    makeSparseArray(mat, r, c, res);
     showSparse(res, "Sparse Array");
 }
