@@ -9,21 +9,19 @@
 # DONE
 
 # TODO
-7. Stack (Array)
-8. Queue (Array)
-9. Circular Queue (Array)
+7.  Stack (Array)
+8.  Queue (Array)
+9.  Circular Queue (Array)
 10. Student Data using SLL
 11. Palindrome using DLL
 12. Stack (LL)
 13. Queue (LL)
-
-# Unordered
-1. Polynomial Addition (LL)
-2. Sparse Addition
-3. Sparse Transpose
-4. Infix to Postfix
-5. Binary Tree Traveral
-6. Binary Tree Operations
-7. Heap Sort
-8. Merge Sort
-9. Quick Sort
+14. Polynomial Addition (LL)
+15. Sparse Addition
+16. Sparse Transpose
+17. Infix to Postfix
+18. Binary Tree Traversal
+19. Binary Tree Operations
+20. Heap Sort
+21. Merge Sort
+22. Quick Sort
