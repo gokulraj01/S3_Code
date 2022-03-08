@@ -1,5 +1,6 @@
 // Author: Gokul Raj, 235, R3A, CSE
-// QUESTION: Implement polynomial addition using a SLL
+// Program 14: Implement polynomial addition using a SLL
+
 #include <stdio.h>
 #include <stdlib.h>
 

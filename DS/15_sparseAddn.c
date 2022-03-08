@@ -1,9 +1,11 @@
 // Author: Gokul Raj, 235, R3A, CSE
+// Program 15: Addition of Sparse Matrices
 
 #include <stdio.h>
 
 #define ARR_LEN 256
 
+// Input Matrix from user
 void getMatrix(int (*destMat)[ARR_LEN], int* r, int* c, char* msg){
     printf("%s\n", msg);
     printf("Enter rows and cols: ");
@@ -15,6 +17,19 @@ void getMatrix(int (*destMat)[ARR_LEN], int* r, int* c, char* msg){
     }
 }
 
+// Input Sparse Matrix from user
+void getSparse(int (*destMat)[3], char* msg){
+    printf("%s\n", msg);
+    printf("Enter Sparse Matrix\n> ");
+    scanf("%d %d %d", &destMat[0][0], &destMat[0][1], &destMat[0][2]);
+    int n = destMat[0][2];
+    for(int i=1; i<=n; i++){
+        printf("> ");
+        scanf("%d %d %d", &destMat[i][0], &destMat[i][1], &destMat[i][2]);
+    }
+}
+
+// Convert Matrix to Sparse Matrix
 void makeSparseArray(int (*sourceMat)[ARR_LEN], int r, int c, int (*destMat)[3]){
     int ri = 1;
     for(int i=0; i<r; i++){
@@ -32,6 +47,7 @@ void makeSparseArray(int (*sourceMat)[ARR_LEN], int r, int c, int (*destMat)[3])
     destMat[0][2] = ri-1;
 }
 
+// Show a formatted sparse matrix
 void showSparse(int (*mat)[3], char* msg){
     int r = mat[0][2]+1, c = 3;
     printf("\n%s\t[%d x %d]\n", msg, r, c);
@@ -42,6 +58,7 @@ void showSparse(int (*mat)[3], char* msg){
     }
 }
 
+// Add two sparse matrices together
 void addSparse(int (*spc1)[3], int (*spc2)[3], int (*dest)[3]){
     int n1 = spc1[0][2]+1, n2 = spc2[0][2]+1, i = 1, j = 1, ri = 1;
     while(i < n1 || j < n2){
@@ -70,17 +87,7 @@ void addSparse(int (*spc1)[3], int (*spc2)[3], int (*dest)[3]){
     dest[0][2] = ri-1;
 }
 
-void getSparse(int (*destMat)[3], char* msg){
-    printf("%s\n", msg);
-    printf("Enter Sparse Matrix\n> ");
-    scanf("%d %d %d", &destMat[0][0], &destMat[0][1], &destMat[0][2]);
-    int n = destMat[0][2];
-    for(int i=1; i<=n; i++){
-        printf("> ");
-        scanf("%d %d %d", &destMat[i][0], &destMat[i][1], &destMat[i][2]);
-    }
-}
-
+// Driver Code
 void main(){
     int spcA[ARR_LEN][3], spcB[ARR_LEN][3], sum[ARR_LEN][3];
     getSparse(spcA, "Sparse A");

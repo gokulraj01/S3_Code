@@ -1,14 +1,17 @@
 //  Author: Gokul Raj, 235, R3A, SCTCE
-//  Program 20: Binary Tree Node Search
+//  Program 19: Binary Tree Operations
+
 #include <stdio.h>
 #include <stdlib.h>
 
+// Structure to hold tree nodes
 struct Node {
     char data;
     struct Node *lhs;
     struct Node *rhs;
 };
 
+// Input a charecter without buffer conflicts
 char inputChar(){
     char c = getchar();
     while(c == '\n')
@@ -18,6 +21,7 @@ char inputChar(){
     return c;
 }
 
+// Generate new tree from user input
 struct Node *makeTree(char name){
     struct Node *root = malloc(sizeof(struct Node));
     root->data = name;
@@ -37,6 +41,7 @@ struct Node *makeTree(char name){
     return root;
 }
 
+// Search the tree for a node having provided key
 struct Node *searchTree(struct Node *root, char key){
     if(root->data == key)
         return root;
@@ -48,6 +53,7 @@ struct Node *searchTree(struct Node *root, char key){
     return res;
 }
 
+// Search the tree for parent of node having provided key
 struct Node *searchParent(struct Node *parent, struct Node *root, char key){
     if(root->data == key)
         return parent;
@@ -59,6 +65,7 @@ struct Node *searchParent(struct Node *parent, struct Node *root, char key){
     return res;
 }
 
+// Search the tree for specified node and deletes it
 void deleteNode(struct Node *tree, char delNode){
     struct Node *res = searchParent(NULL, tree, delNode);
     struct Node *temp;
@@ -82,6 +89,7 @@ void deleteNode(struct Node *tree, char delNode){
         printf("Node not found!!");
 }
 
+// Inserts a new node at specified position
 void insertNode(struct Node *tree, char root, char nodeName){
     struct Node *res = searchTree(tree, root);
     if(res->lhs == NULL || res->rhs == NULL){
@@ -100,6 +108,7 @@ void insertNode(struct Node *tree, char root, char nodeName){
         printf("Node Full!!\n");
 }
 
+// Forms Array Representation of Tree and Displays it
 void showTree(char *msg, struct Node *tree){
     printf("\n%s\n", msg);
     struct Node *nodes[2][10];
@@ -133,6 +142,7 @@ void showTree(char *msg, struct Node *tree){
     }
 }
 
+// Driver Code for UI
 void main(){
     printf("Binary Tree Operations\nCreate a tree!!\n");
     printf("Enter Root Node Name: ");
@@ -180,4 +190,5 @@ void main(){
         }
     }
 }
+
 // Sample input: abdf00g000c0eh00i00

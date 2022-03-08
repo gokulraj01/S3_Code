@@ -1,5 +1,6 @@
 // Author: Gokul Raj, 235, R3A, CSE
-// QUESTION: Implement a queue using Linked List.
+// Program 13: Implement a queue using Linked List.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

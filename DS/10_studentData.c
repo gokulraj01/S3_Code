@@ -1,16 +1,16 @@
+/*  Author: Gokul Raj, 235, R3A, SCTCE
+    Program 10:
+    Create a singly linked list to store name, roll no and marks obtained by n students.
+    Implement the following functions:
+        1) Insert student at front of list
+        2) Insert student at end of list
+        3) Insert student after a particular student (roll no)
+        4) Delete student at front of list
+        5) Delete student at end of list
+        6) Delete a student having a particular roll no.
+*/
 #include <stdio.h>
 #include <stdlib.h>
-
-/* QUESTION:
-Create a singly linked list to store name, roll no and marks obtained by n students. Implement 
-the following functions:
-    i) Insert student at front of list
-    ii) Insert student at end of list
-    iii) Insert student after a particular student (roll no)
-    iv) Delete student at front of list
-    v) Delete student at end of list
-    vi) Delete a student having a particular roll no.
-*/
 
 #define ARR_LEN 256
 

@@ -1,5 +1,5 @@
 // Author: Gokul Raj, 235, R3A, CSE
-// QUESTION: Store string in doubly linked list. Check if palindrome.
+// Program 11: Store string in doubly linked list. Check if palindrome.
 
 #include <stdio.h>
 #include <stdlib.h>

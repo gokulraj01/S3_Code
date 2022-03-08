@@ -1,9 +1,8 @@
 // Author: Gokul Raj, 235, R3A, CSE
+// Program 20: Sorting Algorithms: Heap Sort
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#define ARR_LEN 256
 
 void showArr(char *msg, int *arr, int n){
     printf("%s: ", msg);

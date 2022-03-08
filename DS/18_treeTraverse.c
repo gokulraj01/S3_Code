@@ -1,16 +1,17 @@
 // Author: Gokul Raj, 235, R3A, CSE
+// Program 18: Traversing a Binary Tree
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ARR_LEN 256
-
+// Structure to hold tree nodes
 struct Node {
     char data;
     struct Node *lhs;
     struct Node *rhs;
 };
 
+// Input a charecter without buffer conflicts
 char inputChar(){
     char c = getchar();
     while(c == '\n')
@@ -20,6 +21,7 @@ char inputChar(){
     return c;
 }
 
+// Generate new tree from user input
 struct Node *makeTree(char name){
     struct Node *root = malloc(sizeof(struct Node));
     root->data = name;
@@ -39,6 +41,7 @@ struct Node *makeTree(char name){
     return root;
 }
 
+// Perform PreOrder Tree Traversal
 char* preOrderTraverse(struct Node *root){
     putchar(root->data);
     if(root->lhs != NULL)
@@ -47,6 +50,7 @@ char* preOrderTraverse(struct Node *root){
         preOrderTraverse(root->rhs);
 }
 
+// Perform InOrder Tree Traversal
 char* inOrderTraverse(struct Node *root){
     if(root->lhs != NULL)
         inOrderTraverse(root->lhs);
@@ -55,6 +59,7 @@ char* inOrderTraverse(struct Node *root){
         inOrderTraverse(root->rhs);
 }
 
+// Perform PostOrder Tree Traversal
 char* postOrderTraverse(struct Node *root){
     if(root->lhs != NULL)
         postOrderTraverse(root->lhs);
@@ -63,6 +68,7 @@ char* postOrderTraverse(struct Node *root){
     putchar(root->data);
 }
 
+// Driver Code
 void main(){
     printf("Binary Tree Traversal\n---------------------\n");
     printf("Enter Name of Node if it exists.\nEnter '0' if No Node/None\n\n");

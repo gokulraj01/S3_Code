@@ -1,5 +1,5 @@
 // Author: Gokul Raj, 235, R3A, CSE
-// Program 7: Sparse Matrix Transpose
+// Program 16: Sparse Matrix Transpose
 
 #include <stdio.h>
 

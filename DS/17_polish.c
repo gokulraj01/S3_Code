@@ -1,9 +1,13 @@
+// Author: Gokul Raj, 235, R3A, CSE
+// Program 17: Infix to Postfix Expression, it's evaluation
+
 #include <stdio.h>
 #include <math.h>
 
 #define MAX_SIZE 64
 #define EXP_MAX 256
 
+// Calculates a^exp in double format
 double pow(double a, double exp){
     double op = 1.0;
     for(double i=1.0; i<=exp; i+=1.0)
@@ -11,6 +15,7 @@ double pow(double a, double exp){
     return op;
 }
 
+// Operator Priority Lookup
 int opRank(char op){
     switch(op){
         case '^':
@@ -30,6 +35,7 @@ int opRank(char op){
     }
 }
 
+// Performs op on a, b, returns output
 double calculate(double a, double b, char op){
     double res;
     switch(op){
@@ -49,12 +55,11 @@ double calculate(double a, double b, char op){
             res = a-b;
             break;
     }
-    printf("Did: %.2f %c %.2f = %.2f\n", a, op, b, res);
     return res;
 }
 
+// Display polish conversion stack
 void status(char c, char* s, char* op, int top, int opi){
-    //printf("Input\tStack\tOut\n");
     printf("%c\t", c);
     for(int i=0; i<=top; i++)
         putc(s[i], stdout);
@@ -64,6 +69,7 @@ void status(char c, char* s, char* op, int top, int opi){
     putc('\n', stdout);
 }
 
+// Convert infix to postfix(polish) expression
 void toPolish(char* exp, char* op){
     char s[MAX_SIZE];
     int top = -1, opi = 0;
@@ -99,10 +105,12 @@ void toPolish(char* exp, char* op){
         }
         status(exp[i], s, op, top, opi);
     }
+    // Pop until stack empty
     while(top > -1)
         op[opi++] = s[top--];
 }
 
+// Evaluate a Polish Expression
 double evaluatePolish(char *polExp){
     double s[MAX_SIZE];
     int top = -1;
@@ -120,6 +128,7 @@ double evaluatePolish(char *polExp){
     return s[0];
 }
 
+// Driver Code
 void main(){
     char op[EXP_MAX], exp[EXP_MAX]; 
     printf("Enter an expression: ");
@@ -127,5 +136,5 @@ void main(){
     printf("Input\tStack\tOut\n");
     toPolish(exp, op);
     printf("Polish: %s\n", op);
-    printf("Result: %2f", evaluatePolish(op));
+    printf("Result: %2f\n", evaluatePolish(op));
 }
