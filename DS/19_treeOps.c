@@ -180,3 +180,4 @@ void main(){
         }
     }
 }
+// Sample input: abdf00g000c0eh00i00
